@@ -7,8 +7,12 @@ from cv2 import *
 import os
 import pickle
 import pre
+import configparser
 
-path = r"D:\lab\data\bone\\"  # 数据根路径
+config = configparser.ConfigParser()
+config.read("configure.conf")
+
+path = config.get("root", "path")  # 数据根路径
 image_path_origin = path + "origin\\"  # 原版路径
 image_path_preprocessed = path + "processed\\"  # 预处理路径
 image_path_temp = path + "temp\\"
@@ -36,7 +40,6 @@ def read_one_pre(index):
     if image is None:
         print('Failed to load image file:', image_file_path)
         sys.exit(1)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # 转黑白
     return image, get_label(index)
 
 
